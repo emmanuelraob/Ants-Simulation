@@ -18,8 +18,6 @@ def run_simulation():
     clock = pygame.time.Clock()  # Create a clock object to control the frame rate
 
     colony = Colony(100)
-    
-    frame_count = 0
 
     run = True
     while run:
@@ -29,12 +27,8 @@ def run_simulation():
                 run = False
         colony.move_ants()
         draw_window(win,colony)
-
-        if frame_count >= FPS/2:
-            colony.eat_once()
-            colony.view_health()
-            frame_count = 0
-
+        colony.eat_once()
+        colony.view_health()
         colony.life()
 
     pygame.quit()  # Quit Pygame

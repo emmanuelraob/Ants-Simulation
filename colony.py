@@ -19,7 +19,7 @@ class Colony:
 
     def eat_once(self):
         for ant in self.ants:
-            ant.eat(-5)
+            ant.eat(-3)
 
     def eat_full(self):
         for ant in self.ants:

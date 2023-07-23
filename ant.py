@@ -17,28 +17,31 @@ class Ant:
         self.speed = random.uniform(0.5,1.5)
         self.angle = random.uniform(0, 2*math.pi)  # ants start with a random orientation
         self.color = (0,0,0)
+        self.distance = 0
+        self.next_distance = random.uniform(10,30) # to move in little lines
     
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
 
     def move(self):
-        proposed_x = self.x + self.speed * math.cos(self.angle)
-        proposed_y = self.y + self.speed * math.sin(self.angle)
+        if self.distance < self.next_distance :
+            self.x = self.x + self.speed * math.cos(self.angle)
+            self.y = self.y + self.speed * math.sin(self.angle)
+            self.distance += self.speed
+        
+        elif self.distance >= self.next_distance:
+            self.distance = 0
+            self.next_distance = random.uniform(10,30)
+            self.angle = self.angle + random.uniform(-2,2)
 
         # If the ant hits the left or right edge of the screen, adjust its angle by π plus a random amount
-        if proposed_x < ANT_RADIUS or proposed_x > WIN_WIDTH - ANT_RADIUS:
-            self.angle = math.pi - self.angle + random.uniform(-0.5, 0.5)
+        if self.x < ANT_RADIUS or self.x > WIN_WIDTH - ANT_RADIUS:
+            self.angle = math.pi - self.angle + random.uniform(-1, -1)
 
         # If the ant hits the top or bottom edge of the screen, flip the sign of its angle and add a random amount
-        if proposed_y < ANT_RADIUS or proposed_y > WIN_HEIGHT - ANT_RADIUS:
-            self.angle = -self.angle + random.uniform(-0.5, 0.5)
+        if self.y < ANT_RADIUS or self.y > WIN_HEIGHT - ANT_RADIUS:
+            self.angle = -self.angle + random.uniform(-1, 1)
 
-        # Update the ant's position using the (possibly updated) angle
-        self.x += self.speed * math.cos(self.angle)
-        self.y += self.speed * math.sin(self.angle)
-
-        # Ensure the angle stays within the range [0, 2π)
-        self.angle = self.angle % (2 * math.pi)
 
     def eat(self, meal):
         if self.food >=0 and meal<0:
@@ -55,6 +58,5 @@ class Ant:
     def view_health(self):
         if self.health <= 0:
             self.color = (255,0,0)
-            self.color = (0,self.food*2,0)
         else:
             self.color = (0,0,0)
