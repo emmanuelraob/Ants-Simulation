@@ -9,6 +9,7 @@ FPS = 30
 
 def draw_window(win,colony):
     win.fill((255, 255, 255))  # Fill the screen with white
+    pygame.draw.circle(win, (100, 50, 0), (WIN_WIDTH // 2, WIN_HEIGHT // 2), 20)
     colony.draw(win)
     pygame.display.update()  # Update the screen
 

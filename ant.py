@@ -96,5 +96,6 @@ class Ant:
             self.health += 1
     
     def view_health(self):
-        if self.food <= 0:
+        self.color = (0,0,0)
+        if self.health < 30:
             self.color = (255,0,0)
