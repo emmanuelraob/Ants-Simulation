@@ -3,9 +3,11 @@ import math
 import random
 import pygame
 from enum import Enum
+from world_variables import World_Variables
+from world import World
 
-
-WIN_WIDTH, WIN_HEIGHT = 800, 600
+world = World_Variables()
+WIN_WIDTH, WIN_HEIGHT = world.screenX, world.screenY
 HEALTH, FOOD = 30*10,30*120 #30*30, 30*120 #30*30, #30*120
 ANT_RADIUS = 2
 
@@ -74,7 +76,7 @@ class Ant:
     def wait(self):
         self.state = State.LOOKING_FOR_FOOD
 
-    def move(self):
+    def move(self, world_matrix):
         if self.state == State.LOOKING_FOR_FOOD:
             self.look_for_food()
         elif self.state == State.COMING_BACK_COLONY:
@@ -83,6 +85,7 @@ class Ant:
             self.carry_food()
         else:
             self.wait()
+        
         
     def eat(self, meal):
         if self.food >=0 and meal<0:

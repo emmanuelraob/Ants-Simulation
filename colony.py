@@ -14,9 +14,9 @@ class Colony:
         for ant in self.ants.values():
             ant.draw(win)
     
-    def move_ants(self):
+    def move_ants(self, world_matrix):
         for ant in self.ants.values():
-            ant.move()
+            ant.move(world_matrix)
 
     def eat_once(self):
         for ant in self.ants.values():
@@ -46,11 +46,6 @@ class Colony:
         if ant_id in self.ants:
             del self.ants[ant_id]
             self.size -= 1
-
-    def see_color(self, x, y):
-        for ant in self.ants.values():
-            pass
-        pass
 
     def check_food_distance(self, x, y):
         for ant in self.ants.values():
