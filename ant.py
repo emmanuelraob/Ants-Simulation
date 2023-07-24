@@ -35,7 +35,7 @@ class Ant:
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
 
-    def look_for_food(self):
+    def look_for_food(self,world_matrix):
         if self.distance < self.next_distance :
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
@@ -55,15 +55,22 @@ class Ant:
         if self.y < ANT_RADIUS or self.y > WIN_HEIGHT - ANT_RADIUS:
             self.angle = -self.angle + random.uniform(-0.5, 0.5)
 
-    def go_to_colony(self):
+        if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
+            world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = (255,125,125)
+
+    def go_to_colony(self,world_matrix):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
         if math.sqrt(dx**2 + dy**2) > 3:
             self.angle = math.atan2((WIN_HEIGHT // 2) - self.y, (WIN_WIDTH // 2) - self.x)
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
+            if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
+                world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = (125,255,125)
         else:
             self.in_colony()
+
+        
 
     def in_colony(self):
         self.color = (0,0,0)
@@ -78,9 +85,9 @@ class Ant:
 
     def move(self, world_matrix):
         if self.state == State.LOOKING_FOR_FOOD:
-            self.look_for_food()
+            self.look_for_food(world_matrix)
         elif self.state == State.COMING_BACK_COLONY:
-            self.go_to_colony()
+            self.go_to_colony(world_matrix)
         elif self.state == State.CARRYING_FOOD:
             self.carry_food()
         else:

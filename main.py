@@ -3,6 +3,7 @@ import pygame
 from ant import Ant
 from colony import Colony
 from food import Food
+from world import World
 from world_variables import World_Variables
 
 # Define some constants
@@ -11,7 +12,6 @@ WIN_WIDTH, WIN_HEIGHT = world.screenX, world.screenY
 FPS = world.fps
 
 def draw_window(win,colony, food, world_matrix):
-    win.fill((255, 255, 255))  # Fill the screen with white
     world_matrix.draw(win)
     pygame.draw.circle(win, (100, 50, 0), (WIN_WIDTH // 2, WIN_HEIGHT // 2), 20)
     food.draw(win)
@@ -22,7 +22,7 @@ def run_simulation():
     pygame.init()  # Initialize Pygame
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))  # Create the Pygame window
     clock = pygame.time.Clock()  # Create a clock object to control the frame rate
-    world_matrix = World_Variables()
+    world_matrix = World()
     colony = Colony(100)
     food = Food()
     run = True
