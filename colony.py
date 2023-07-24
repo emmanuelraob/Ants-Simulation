@@ -1,5 +1,6 @@
 from ant import Ant
 import pygame
+import math
 
 class Colony:
     def __init__(self, size):
@@ -45,3 +46,16 @@ class Colony:
         if ant_id in self.ants:
             del self.ants[ant_id]
             self.size -= 1
+
+    def see_color(self, x, y):
+        for ant in self.ants.values():
+            pass
+        pass
+
+    def check_food_distance(self, x, y):
+        for ant in self.ants.values():
+            distance = self.calculate_distance(ant.x, ant.y, x, y)
+            
+
+    def calculate_distance(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)

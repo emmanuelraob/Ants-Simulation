@@ -67,6 +67,9 @@ class Ant:
         self.color = (0,0,0)
         self.food = FOOD
         self.state = State.LOOKING_FOR_FOOD
+    
+    def carry_food(self):
+        self.go_to_colony()
 
     def wait(self):
         self.state = State.LOOKING_FOR_FOOD
@@ -76,6 +79,8 @@ class Ant:
             self.look_for_food()
         elif self.state == State.COMING_BACK_COLONY:
             self.go_to_colony()
+        elif self.state == State.CARRYING_FOOD:
+            self.carry_food()
         else:
             self.wait()
         
