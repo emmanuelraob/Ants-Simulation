@@ -6,8 +6,8 @@ from enum import Enum
 from world_variables import World_Variables
 from world import World
 
-world = World_Variables()
-WIN_WIDTH, WIN_HEIGHT = world.screenX, world.screenY
+world_variables = World_Variables()
+WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
 HEALTH, FOOD = 30*10,30*120 #30*30, 30*120 #30*30, #30*120
 ANT_RADIUS = 2
 
@@ -27,7 +27,7 @@ class Ant:
         self.food = FOOD # this amount of food last arround 2 minutes
         self.speed = random.uniform(0.5,1.5)
         self.angle = random.uniform(0, 2*math.pi)  # ants start with a random orientation
-        self.color = (0,0,0)
+        self.color = world_variables.ant_color
         self.distance = 0
         self.next_distance = random.uniform(10,30) # to move in little lines
         self.state = State.LOOKING_FOR_FOOD
@@ -55,9 +55,6 @@ class Ant:
         if self.y < ANT_RADIUS or self.y > WIN_HEIGHT - ANT_RADIUS:
             self.angle = -self.angle + random.uniform(-0.5, 0.5)
 
-        if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
-            world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = (255,125,125)
-
     def go_to_colony(self,world_matrix):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
@@ -66,14 +63,14 @@ class Ant:
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
             if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
-                world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = (125,255,125)
+                world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
         else:
             self.in_colony()
 
         
 
     def in_colony(self):
-        self.color = (0,0,0)
+        self.color = world_variables.ant_color
         self.food = FOOD
         self.state = State.LOOKING_FOR_FOOD
     
@@ -111,6 +108,6 @@ class Ant:
             self.health += 1
     
     def view_health(self):
-        self.color = (0,0,0)
+        self.color = world_variables.ant_color
         if self.health < 30:
-            self.color = (255,0,0)
+            self.color = world_variables.ant_trace_forward

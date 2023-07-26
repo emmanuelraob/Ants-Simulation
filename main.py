@@ -7,9 +7,9 @@ from world import World
 from world_variables import World_Variables
 
 # Define some constants
-world = World_Variables() # for use a group of globar variables used in all the program
-WIN_WIDTH, WIN_HEIGHT = world.screenX, world.screenY
-FPS = world.fps
+world_variables = World_Variables() # for use a group of globar variables used in all the program
+WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
+FPS = world_variables.fps
 
 def draw_window(win,colony, food, world_matrix):
     world_matrix.draw(win)
@@ -23,7 +23,7 @@ def run_simulation():
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))  # Create the Pygame window
     clock = pygame.time.Clock()  # Create a clock object to control the frame rate
     world_matrix = World()
-    colony = Colony(100)
+    colony = Colony(world_variables.ant_amount)
     food = Food()
     run = True
     while run:
@@ -35,7 +35,6 @@ def run_simulation():
         colony.eat_once()
         colony.view_health()
         colony.life()
-
         draw_window(win,colony,food,world_matrix)
 
     pygame.quit()  # Quit Pygame

@@ -1,14 +1,15 @@
 from ant import Ant
+from world_variables import World_Variables
 import pygame
 import math
+
+world_variables = World_Variables()
 
 class Colony:
     def __init__(self, size):
         self.size = size
-        self.x = 100
-        self.y = 100
         self.ants = {i: Ant(i) for i in range(size)}
-        self.food = 1000
+        self.food = world_variables.colony_amount_food
 
     def draw(self, win):
         for ant in self.ants.values():
