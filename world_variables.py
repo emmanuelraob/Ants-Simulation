@@ -1,7 +1,7 @@
 class World_Variables:
     def __init__(self):
         #screen
-        self.screenX = 800
+        self.screenX = 1200
         self.screenY = 600
         self.fps = 30
 
