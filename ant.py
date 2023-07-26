@@ -62,8 +62,8 @@ class Ant:
             self.angle = math.atan2((WIN_HEIGHT // 2) - self.y, (WIN_WIDTH // 2) - self.x)
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
-            if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
-                world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
+            #if self.x>=0 and self.y>=0 and self.x<=WIN_WIDTH and self.y<=WIN_HEIGHT:
+                #world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
         else:
             self.in_colony()
 
