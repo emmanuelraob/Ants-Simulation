@@ -5,6 +5,7 @@ import pygame
 from enum import Enum
 from world_variables import World_Variables
 from world import World
+from obstacles import Obstacles
 
 world_variables = World_Variables()
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
@@ -36,6 +37,8 @@ class Ant:
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
 
     def look_for_food(self,world_matrix):
+        self.verify_direction(world_matrix)
+            
         if self.distance < self.next_distance :
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
@@ -47,18 +50,10 @@ class Ant:
             self.angle = self.angle + random.uniform(-2,2)
             self.state = State.WAITING
 
-        # If the ant hits the left or right edge of the screen, adjust its angle by π plus a random amount
-        if self.x < ANT_RADIUS or self.x > WIN_WIDTH - ANT_RADIUS:
-            self.angle = math.pi - self.angle + random.uniform(-0.5, -0.5)
-
-        # If the ant hits the top or bottom edge of the screen, flip the sign of its angle and add a random amount
-        if self.y < ANT_RADIUS or self.y > WIN_HEIGHT - ANT_RADIUS:
-            self.angle = -self.angle + random.uniform(-0.5, 0.5)
-
     def go_to_colony(self,world_matrix):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
-        if math.sqrt(dx**2 + dy**2) > 3:
+        if math.sqrt(dx**2 + dy**2) > 3: 
             self.angle = math.atan2((WIN_HEIGHT // 2) - self.y, (WIN_WIDTH // 2) - self.x)
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
@@ -67,14 +62,29 @@ class Ant:
         else:
             self.in_colony()
 
+    def verify_direction(self,world_matrix):
+        nextx = self.x + self.speed * math.cos(self.angle)
+        nexty = self.y + self.speed * math.sin(self.angle)
+
+        # If the ant hits the left or right edge of the screen, adjust its angle by π plus a random amount
+        if nextx < ANT_RADIUS or nextx > WIN_WIDTH - ANT_RADIUS:
+            self.angle = math.pi - self.angle
+
+        # If the ant hits the top or bottom edge of the screen, flip the sign of its angle and add a random amount
+        if nexty < ANT_RADIUS or nexty > WIN_HEIGHT - ANT_RADIUS:
+            self.angle = -self.angle
+
+        if world_matrix.verify(nextx, nexty):
+            self.angle = (self.angle + math.pi) % (2 * math.pi)
         
+            
 
     def in_colony(self):
         self.color = world_variables.ant_color
         self.food = FOOD
         self.state = State.LOOKING_FOR_FOOD
     
-    def carry_food(self):
+    def carry_food(self,world_matrix):
         self.go_to_colony()
 
     def wait(self):
@@ -86,7 +96,7 @@ class Ant:
         elif self.state == State.COMING_BACK_COLONY:
             self.go_to_colony(world_matrix)
         elif self.state == State.CARRYING_FOOD:
-            self.carry_food()
+            self.carry_food(world_matrix)
         else:
             self.wait()
         

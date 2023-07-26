@@ -8,3 +8,8 @@ class Obstacle:
 
     def draw(self, win):
         pygame.draw.rect(win, world_variables.obstacle_color, self.rect)
+
+    def crash(self, x, y):
+        if self.rect.collidepoint(x,y):
+            return True
+        return False

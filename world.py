@@ -1,6 +1,6 @@
 import pygame
 from world_variables import World_Variables
-from obstacle import Obstacle
+from obstacles import Obstacles
 
 world_variables = World_Variables()
 
@@ -9,7 +9,7 @@ class World:
     def __init__(self):
         white_color = world_variables.background_color
         self.world_matrix = [[white_color for _ in range(world_variables.screenX//4)]for _ in range(world_variables.screenY//4)]
-        self.obstacles = Obstacle(200,200,10,10)
+        self.obstacles = Obstacles()
     
     def draw(self, win):
         for y in range(world_variables.screenY//4):
@@ -24,5 +24,7 @@ class World:
                 self.world_matrix[y][x] = (r, g, b)
                 pygame.draw.rect(win, self.world_matrix[y][x], pygame.Rect(x*4, y*4, 4, 4))
         self.obstacles.draw(win)
-        
+
+    def verify(self,x,y):
+        return self.obstacles.verify_pos(x,y)
 
