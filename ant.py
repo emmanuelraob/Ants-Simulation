@@ -33,6 +33,7 @@ class Ant:
         self.distance = 0
         self.next_distance = random.uniform(10,30) # to move in little lines
         self.state = State.LOOKING_FOR_FOOD
+        print(self.id)
     
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
@@ -52,6 +53,7 @@ class Ant:
         
         if self.x < WIN_WIDTH and self.x > 0 and self.y < WIN_HEIGHT and self.y > 0:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_forward
+            world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
 
     def go_to_colony(self,world_matrix):
         self.verify_direction(world_matrix)
@@ -74,6 +76,7 @@ class Ant:
 
         if self.x < WIN_WIDTH and self.x > 0 and self.y < WIN_HEIGHT and self.y > 0:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
+            world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
 
     def verify_direction(self,world_matrix):
         nextx = self.x + self.speed * math.cos(self.angle)
