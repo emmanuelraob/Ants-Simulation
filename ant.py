@@ -18,6 +18,7 @@ class State (Enum):
     WAITING = 3
     CARRYING_FOOD = 4 
     GOING_FOR_FOOD = 5
+    KEEPING_TRACE = 6
 
 
 class Ant:
@@ -33,14 +34,25 @@ class Ant:
         self.distance = 0
         self.next_distance = random.uniform(10,30) # to move in little lines
         self.state = State.LOOKING_FOR_FOOD
-        print(self.id)
     
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
 
+    def move(self, world_matrix):
+        if self.state == State.LOOKING_FOR_FOOD:
+            self.look_for_food(world_matrix)
+        elif self.state == State.COMING_BACK_COLONY:
+            self.go_to_colony(world_matrix, False)
+        elif self.state == State.CARRYING_FOOD:
+            self.go_to_colony(world_matrix, True)
+        elif self.state == State.GOING_FOR_FOOD:
+            self.go_to_food(world_matrix)
+        elif self.state == State.KEEPING_TRACE:
+            pass
+        else:
+            pass
+
     def look_for_food(self,world_matrix):
-        self.verify_direction(world_matrix)
-            
         if self.distance < self.next_distance :
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
@@ -55,8 +67,7 @@ class Ant:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_forward
             world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
 
-    def go_to_colony(self,world_matrix):
-        self.verify_direction(world_matrix)
+    def go_to_colony(self,world_matrix, carry_food):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
         if self.distance < self.next_distance and math.sqrt(dx**2 + dy**2) > 5:
@@ -93,26 +104,20 @@ class Ant:
         if world_matrix.verify(nextx, nexty):
             self.angle = (self.angle + math.pi) % (2 * math.pi)
         
-            
+    def tracing_for_food(self,world_matrix):
+        pass        
+
+    def tracing_to_colony(self,world_matrix):
+        pass
+
+    def go_to_food(self, word_matrix):
+        pass
 
     def in_colony(self):
         self.color = world_variables.ant_color
         self.food = FOOD
         
-    
-    def carry_food(self,world_matrix):
-        self.go_to_colony()
 
-    def move(self, world_matrix):
-        if self.state == State.LOOKING_FOR_FOOD:
-            self.look_for_food(world_matrix)
-        elif self.state == State.COMING_BACK_COLONY:
-            self.go_to_colony(world_matrix)
-        elif self.state == State.CARRYING_FOOD:
-            self.carry_food(world_matrix)
-        else:
-            pass
-        
     def eat(self, meal):
         if self.food >=0 and meal<0:
             self.food += meal
@@ -123,7 +128,7 @@ class Ant:
     
     def life(self):
         if self.food<=0 and self.health > 0:
-            self.health -= 1
+            self.health -= self.speed
             if self.food < 0.2*FOOD:
                 self.state = State.COMING_BACK_COLONY
         elif self.food > 0 and self.health < HEALTH:

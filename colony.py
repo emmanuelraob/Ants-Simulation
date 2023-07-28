@@ -17,6 +17,8 @@ class Colony:
     
     def move_ants(self, world_matrix):
         for ant in self.ants.values():
+            #look for trace
+            ant.verify_direction(world_matrix)
             ant.move(world_matrix)
 
     def eat_once(self):
@@ -47,11 +49,3 @@ class Colony:
         if ant_id in self.ants:
             del self.ants[ant_id]
             self.size -= 1
-
-    def check_food_distance(self, x, y):
-        for ant in self.ants.values():
-            distance = self.calculate_distance(ant.x, ant.y, x, y)
-            
-
-    def calculate_distance(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
