@@ -34,9 +34,10 @@ def run_simulation():
                 
         colony.move_ants(world_matrix)
         colony.life()
-        
+
         if counter == 0: #to do something once a second 
             overlay.update(colony)
+            colony.spawn()
         if counter%5 == 0: #to do 6 times in a second 
             colony.view_health()
             

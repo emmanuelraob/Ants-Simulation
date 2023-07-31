@@ -10,6 +10,7 @@ class Colony:
         self.size = size
         self.ants = {i: Ant(i) for i in range(size)}
         self.food = world_variables.colony_amount_food
+        self.deads = 0
 
     def draw(self, win):
         for ant in self.ants.values():
@@ -52,3 +53,9 @@ class Colony:
         if ant_id in self.ants:
             del self.ants[ant_id]
             self.size -= 1
+            self.deads += 1
+    
+    def spawn(self):
+        if self.food > world_variables.colony_amount_food/2:
+            self.add_ant()
+            self.food -= 15

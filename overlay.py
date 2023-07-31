@@ -11,16 +11,18 @@ class Overlay:
         #variables to display
         self.ant_amount = 0
         self.colony_food = 0
+        self.deads = 0
 
         
     def update(self, colony):
         self.ant_amount = colony.size
         self.colony_food = colony.food
+        self.deads = colony.deads
 
     def draw(self, win):
         self.text1 = self.font.render(f"Ant amount: {self.ant_amount}", True, (255, 255, 255))
         self.text2 = self.font.render(f"Colony food: {self.colony_food}", True, (255, 255, 255))
-        self.text3 = self.font.render(f"Variable 3: {3}", True, (255, 255, 255))
+        self.text3 = self.font.render(f"Deads: {self.deads}", True, (255, 255, 255))
 
         pygame.draw.rect(win, world_variables.obstacle_color, self.rect)
 
