@@ -19,7 +19,7 @@ class Colony:
         for ant in self.ants.values():
             #look for trace
             ant.verify_direction(world_matrix)
-            ant.move(world_matrix)
+            ant.move(world_matrix,self)
         self.eat_once()
 
     def eat_once(self):
@@ -28,7 +28,9 @@ class Colony:
 
     def eat_full(self):
         for ant in self.ants.values():
-            ant.eat(1000)
+            if self.food > 0:
+                ant.eat(1000)
+                self.food = 1
 
     def view_health(self):
         for ant_id, ant in list(self.ants.items()):

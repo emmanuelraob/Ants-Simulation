@@ -33,12 +33,13 @@ def run_simulation():
                 run = False
                 
         colony.move_ants(world_matrix)
+        colony.life()
         
         if counter == 0: #to do something once a second 
             overlay.update(colony)
         if counter%5 == 0: #to do 6 times in a second 
             colony.view_health()
-            colony.life()
+            
         draw_window(win,colony, overlay,world_matrix)
 
         counter = 0 if counter > world_variables.fps else counter + 1

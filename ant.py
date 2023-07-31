@@ -9,7 +9,7 @@ from obstacles import Obstacles
 
 world_variables = World_Variables()
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
-HEALTH, FOOD = 30*10,30*30 #30*30, 30*120 
+HEALTH, FOOD = 30*10,30*10 #30*30, 30*120 
 ANT_RADIUS = 2
 
 class State (Enum):
@@ -38,13 +38,13 @@ class Ant:
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
 
-    def move(self, world_matrix):
+    def move(self, world_matrix,colony):
         if self.state == State.LOOKING_FOR_FOOD:
             self.look_for_food(world_matrix)
         elif self.state == State.COMING_BACK_COLONY:
-            self.go_to_colony(world_matrix, False)
+            self.go_to_colony(world_matrix, False,colony)
         elif self.state == State.CARRYING_FOOD:
-            self.go_to_colony(world_matrix, True)
+            self.go_to_colony(world_matrix, True,colony)
         elif self.state == State.GOING_FOR_FOOD:
             self.go_to_food(world_matrix)
         elif self.state == State.KEEPING_TRACE:
@@ -67,7 +67,7 @@ class Ant:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_forward
             world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
 
-    def go_to_colony(self,world_matrix, carry_food):
+    def go_to_colony(self,world_matrix, carry_food, colony):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
         if self.distance < self.next_distance and math.sqrt(dx**2 + dy**2) > 5:
@@ -83,7 +83,7 @@ class Ant:
                 self.state = State.LOOKING_FOR_FOOD
             elif self.state == State.CARRYING_FOOD:
                 self.state = State.GOING_FOR_FOOD
-            self.in_colony()
+            self.in_colony(colony)
 
         if self.x < WIN_WIDTH and self.x > 0 and self.y < WIN_HEIGHT and self.y > 0:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
@@ -105,9 +105,11 @@ class Ant:
     def go_to_food(self, word_matrix):
         pass
 
-    def in_colony(self):
-        self.color = world_variables.ant_color
-        self.food = FOOD
+    def in_colony(self, colony):
+        if colony.food > 0:
+            self.color = world_variables.ant_color
+            self.food = FOOD
+            colony.food -= 1
         
 
     def eat(self, meal):
