@@ -20,6 +20,7 @@ class Colony:
             #look for trace
             ant.verify_direction(world_matrix)
             ant.move(world_matrix)
+        self.eat_once()
 
     def eat_once(self):
         for ant in self.ants.values():

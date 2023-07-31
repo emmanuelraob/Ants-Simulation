@@ -24,4 +24,5 @@ class World_Variables:
         #obstacle
         self.obstacle_color = (127,127,127)
 
-        
+        #overlay
+        self.overlay_thickness = 250

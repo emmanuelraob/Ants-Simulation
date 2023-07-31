@@ -9,7 +9,7 @@ from obstacles import Obstacles
 
 world_variables = World_Variables()
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
-HEALTH, FOOD = 30*30,30*120 #30*30, 30*120 
+HEALTH, FOOD = 30*10,30*30 #30*30, 30*120 
 ANT_RADIUS = 2
 
 class State (Enum):
@@ -92,14 +92,6 @@ class Ant:
     def verify_direction(self,world_matrix):
         nextx = self.x + self.speed * math.cos(self.angle)
         nexty = self.y + self.speed * math.sin(self.angle)
-
-        # If the ant hits the left or right edge of the screen, adjust its angle by π plus a random amount
-        if nextx < ANT_RADIUS or nextx > WIN_WIDTH - ANT_RADIUS:
-            self.angle = math.pi - self.angle
-
-        # If the ant hits the top or bottom edge of the screen, flip the sign of its angle and add a random amount
-        if nexty < ANT_RADIUS or nexty > WIN_HEIGHT - ANT_RADIUS:
-            self.angle = -self.angle
 
         if world_matrix.verify(nextx, nexty):
             self.angle = (self.angle + math.pi) % (2 * math.pi)
