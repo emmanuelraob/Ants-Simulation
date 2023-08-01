@@ -45,8 +45,16 @@ class QuadTree:
             self.build(child_node, depth, level+1)
 
     def get_in_region(self, x, y):
-        level = self.root.nodes
-        for node in level:
-            if node.x < x and node.y < y and node.width > x and node.height > y:
-                return node.objects
-        return []
+        return self.get_in_region_not_root(self.root, x, y)
+
+    def get_in_region_not_root(self, node, x, y):
+        if x < node.x or x > node.width or y < node.y or y > node.height:
+            return None #return nothing if the point is out of the area
+        
+        if node.has_children():
+            for child_node in node.nodes:
+                result = self.get_in_region_not_root(child_node, x, y)
+                if result is not None:
+                    return result
+
+        return node.objects
