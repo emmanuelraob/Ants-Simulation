@@ -9,7 +9,7 @@ from obstacles import Obstacles
 
 world_variables = World_Variables()
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
-HEALTH, FOOD = 30*10,30*10 #30*30, 30*120 
+HEALTH, FOOD = 30*30,30*120 #30*30, 30*120 
 ANT_RADIUS = 2
 
 class State (Enum):
