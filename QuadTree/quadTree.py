@@ -41,10 +41,6 @@ class QuadTree:
             Node(half_width, half_height, node.width, node.height, objects[3],level)
         ]
 
-        print(node.nodes[0])
-
-        print("")
-
         for child_node in node.nodes:
             self.build(child_node, depth, level+1)
 
