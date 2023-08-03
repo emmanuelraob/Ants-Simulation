@@ -1,15 +1,15 @@
 import pygame
 import random
 
-WIN_WIDTH, WIN_HEIGHT = 800, 600
-FOOD_RADIUS = 5
+from world_variables import World_Variables
+world_variables = World_Variables()
 
 class Food:
-    def __init__(self):
+    def __init__(self, x, y):
+        self.circle = pygame.
         self.food_left = 100
-        self.x = 100
-        self.y = 100
-        self.color = (0,255,0)
+        self.x = x
+        self.y = y
 
     def draw(self, win):
         food = self.food_left

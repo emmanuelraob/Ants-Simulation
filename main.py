@@ -1,4 +1,6 @@
 import pygame
+import multiprocessing
+
 from colony import Colony
 #from food import Food
 from world import World

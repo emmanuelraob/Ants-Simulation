@@ -23,15 +23,15 @@ class QuadTree:
         objects = [[],[],[],[]]
 
         for obj in node.objects:
-            if obj.x < half_width:
-                if obj.y < half_height:
+            if obj.x - 10 < half_width:
+                if obj.y - 10 < half_height:
                     objects[0].append(obj)
-                else:
+                if obj.y + 10 > half_height:
                     objects[1].append(obj)
-            else:
-                if obj.y < half_height:
+            if obj.x + 10 > half_width:
+                if obj.y - 10 < half_height:
                     objects[2].append(obj)
-                else:
+                if obj.y + 10 > half_height:
                     objects[3].append(obj)
         
         node.nodes = [
