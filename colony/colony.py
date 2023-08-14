@@ -1,5 +1,5 @@
-from ant import Ant
-from world_variables import World_Variables
+from colony.ant import Ant
+from world.world_variables import World_Variables
 import pygame
 import math
 

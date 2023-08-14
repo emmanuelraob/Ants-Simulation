@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from world_variables import World_Variables
+from world.world_variables import World_Variables
 world_variables = World_Variables()
 
 class Food:

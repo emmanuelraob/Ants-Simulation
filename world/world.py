@@ -1,5 +1,5 @@
 import pygame
-from world_variables import World_Variables
+from world.world_variables import World_Variables
 from obstacles.obstacles import Obstacles
 
 world_variables = World_Variables()

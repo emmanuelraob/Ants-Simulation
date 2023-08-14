@@ -1,10 +1,10 @@
 import pygame
 import multiprocessing
 
-from colony import Colony
+from colony.colony import Colony
 #from food import Food
-from world import World
-from world_variables import World_Variables
+from world.world import World
+from world.world_variables import World_Variables
 from overlay.overlay import Overlay
 
 # Define some constants

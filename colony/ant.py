@@ -3,8 +3,8 @@ import math
 import random
 import pygame
 from enum import Enum
-from world_variables import World_Variables
-from world import World
+from world.world_variables import World_Variables
+from world.world import World
 from obstacles.obstacles import Obstacles
 
 world_variables = World_Variables()
