@@ -1,5 +1,5 @@
 import random
-from obstacle import Obstacle
+from obstacles.obstacle import Obstacle
 from QuadTree.quadTree import QuadTree
 
 from world_variables import World_Variables

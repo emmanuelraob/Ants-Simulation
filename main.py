@@ -5,7 +5,7 @@ from colony import Colony
 #from food import Food
 from world import World
 from world_variables import World_Variables
-from overlay import Overlay
+from overlay.overlay import Overlay
 
 # Define some constants
 world_variables = World_Variables() # for use a group of globar variables used in all the program

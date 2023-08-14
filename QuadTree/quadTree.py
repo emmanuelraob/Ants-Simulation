@@ -23,7 +23,7 @@ class QuadTree:
         objects = [[],[],[],[]]
 
         for obj in node.objects:
-            if hasattr(obj, "rect"):
+            if hasattr(obj, "rect"): #to know if using rects or circles 
                 if obj.x - obj.width < half_width:
                     if obj.y - obj.height < half_height:
                         objects[0].append(obj)

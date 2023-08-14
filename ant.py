@@ -5,7 +5,7 @@ import pygame
 from enum import Enum
 from world_variables import World_Variables
 from world import World
-from obstacles import Obstacles
+from obstacles.obstacles import Obstacles
 
 world_variables = World_Variables()
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY

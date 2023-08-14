@@ -1,6 +1,6 @@
 import pygame
 from world_variables import World_Variables
-from obstacles import Obstacles
+from obstacles.obstacles import Obstacles
 
 world_variables = World_Variables()
 
