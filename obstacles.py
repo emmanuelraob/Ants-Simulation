@@ -11,7 +11,7 @@ class Obstacles:
         self.obstacles.append(Obstacle(-5,-5,5,world_variables.screenY+10)) #left wall
         self.obstacles.append(Obstacle(world_variables.screenX,-5,5,world_variables.screenY+10)) #rigth wall
         self.obstacles.append(Obstacle(-5,-5,world_variables.screenX+10,5)) #uper wall
-        self.obstacles.append(Obstacle(-5,world_variables.screenY,world_variables.screenX+10,5)) #down wall
+        self.obstacles.append(Obstacle(-5,world_variables.screenY,world_variables.screenX+10,5)) #buttom wall
 
         self.tree = QuadTree( world_variables.tree_depth, -5, -5, world_variables.screenX+10, world_variables.screenY+15, objects=self.obstacles)
 

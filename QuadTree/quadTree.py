@@ -23,16 +23,19 @@ class QuadTree:
         objects = [[],[],[],[]]
 
         for obj in node.objects:
-            if obj.x - 10 < half_width:
-                if obj.y - 10 < half_height:
-                    objects[0].append(obj)
-                if obj.y + 10 > half_height:
-                    objects[1].append(obj)
-            if obj.x + 10 > half_width:
-                if obj.y - 10 < half_height:
-                    objects[2].append(obj)
-                if obj.y + 10 > half_height:
-                    objects[3].append(obj)
+            if hasattr(obj, "rect"):
+                if obj.x - obj.width < half_width:
+                    if obj.y - obj.height < half_height:
+                        objects[0].append(obj)
+                    if obj.y + obj.height > half_height:
+                        objects[1].append(obj)
+                if obj.x + obj.width > half_width:
+                    if obj.y - obj.height < half_height:
+                        objects[2].append(obj)
+                    if obj.y + obj.height > half_height:
+                        objects[3].append(obj)
+            else: 
+                pass
         
         node.nodes = [
             Node(x, y, half_width, half_height, objects[0],level),
