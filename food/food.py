@@ -1,25 +1,32 @@
 import pygame
 import random
-
+import math
+from food.meal import Meal
+from QuadTree.quadTree import QuadTree
 from world.world_variables import World_Variables
 world_variables = World_Variables()
 
+
 class Food:
-    def __init__(self, x, y):
-        self.circle = pygame.
-        self.food_left = 100
-        self.x = x
-        self.y = y
-
+    def __init__(self):
+        self.meals = []
+        self.build()
+        self.tree = QuadTree( world_variables.tree_depth, -5, -5, world_variables.screenX+10, world_variables.screenY+15, objects=self.meals)
+        
     def draw(self, win):
-        food = self.food_left
-        food = self.map_range(food,0,100,1,7)
-        pygame.draw.circle(win, self.color, (self.x, self.y), food)
-
-    def map_range(self, value, x1, x2, y1, y2):
-        return y1 + (value - x1) * (y2 - y1) / (x2 - x1)
-
+        for meal in self.meals:
+            meal.draw(win)
     
-    def move(self, posx, posy):
-            self.x = posx
-            self.y = posy
+    def build(self):
+        for j in range(world_variables.food_collection_amount):
+            x_center = random.uniform(world_variables.food_collection_radius, world_variables.screenX-world_variables.food_collection_radius)
+            y_center = random.uniform(world_variables.food_collection_radius, world_variables.screenY-world_variables.food_collection_radius)
+            
+            for i in range(world_variables.food_amount_collection):
+                angle = random.uniform(0, 2 * math.pi) 
+                r = world_variables.food_collection_radius * math.sqrt(random.uniform(0, 1)) 
+                
+                x = x_center + r * math.cos(angle)
+                y = y_center + r * math.sin(angle)
+
+                self.meals.append(Meal(x, y, 1))

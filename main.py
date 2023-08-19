@@ -1,8 +1,7 @@
 import pygame
-import multiprocessing
 
 from colony.colony import Colony
-#from food import Food
+from food.food import Food
 from world.world import World
 from world.world_variables import World_Variables
 from overlay.overlay import Overlay
@@ -12,12 +11,14 @@ world_variables = World_Variables() # for use a group of globar variables used i
 WIN_WIDTH, WIN_HEIGHT = world_variables.screenX, world_variables.screenY
 FPS = world_variables.fps
 
-def draw_window(win,colony, overlay, world_matrix):
+def draw_window(win,colony, overlay, world_matrix, food):
     world_matrix.draw(win)
     pygame.draw.circle(win, (100, 50, 0), (WIN_WIDTH // 2, WIN_HEIGHT // 2), 20)
+    food.draw(win)
     colony.draw(win)
     overlay.draw(win)
     pygame.display.update()  # Update the screen
+
 
 def run_simulation():
     pygame.init()  # Initialize Pygame
@@ -26,6 +27,7 @@ def run_simulation():
     world_matrix = World()
     colony = Colony(world_variables.ant_amount)
     overlay = Overlay()
+    food = Food()
     run = True
     counter = 0
     while run:
@@ -43,7 +45,7 @@ def run_simulation():
         if counter%5 == 0: #to do 6 times in a second 
             colony.view_health()
             
-        draw_window(win,colony, overlay,world_matrix)
+        draw_window(win,colony, overlay,world_matrix, food)
 
         counter = 0 if counter > world_variables.fps else counter + 1
 

@@ -20,6 +20,10 @@ class World_Variables:
         self.ant_trace_back = (0,255,0)
 
         #food
+        self.food_color = (0,200,0)
+        self.food_collection_amount = 3
+        self.food_collection_radius = 30
+        self.food_amount_collection = 150
 
         #obstacle
         self.obstacle_color = (127,127,127)
