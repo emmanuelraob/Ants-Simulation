@@ -1,6 +1,7 @@
 import pygame
 from world.world_variables import World_Variables
 from obstacles.obstacles import Obstacles
+from food.food import Food
 
 world_variables = World_Variables()
 
@@ -11,6 +12,7 @@ class World:
         self.world_matrix = [[white_color for _ in range(world_variables.screenX//4)]for _ in range(world_variables.screenY//4)]
         self.world_matrix_id = [[None for _ in range(world_variables.screenX//4)] for _ in range(world_variables.screenY//4)]
         self.obstacles = Obstacles()
+        self.food = Food()
     
     def draw(self, win):
         for y in range(world_variables.screenY//4):
@@ -27,7 +29,10 @@ class World:
                     self.world_matrix_id[y][x] = None
                 pygame.draw.rect(win, self.world_matrix[y][x], pygame.Rect(x*4, y*4, 4, 4))
         self.obstacles.draw(win)
+        self.food.draw(win)
 
     def verify(self,x,y):
         return self.obstacles.verify_pos(x,y)
 
+    def verify_for_food(self, x, y):
+        return self.food.verify_pos(x,y)

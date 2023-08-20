@@ -11,3 +11,6 @@ class Meal(Obstacle):
 
     def draw(self, win):
         pygame.draw.rect(win, world_variables.food_color, self.rect, border_radius=self.r)
+
+    def crash(self, x, y):
+        return super().crash(x, y)

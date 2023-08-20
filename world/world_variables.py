@@ -21,9 +21,9 @@ class World_Variables:
 
         #food
         self.food_color = (0,200,0)
-        self.food_collection_amount = 3
-        self.food_collection_radius = 30
-        self.food_amount_collection = 150
+        self.food_collection_amount = 4
+        self.food_collection_radius = 25
+        self.food_amount_collection = 1000
 
         #obstacle
         self.obstacle_color = (127,127,127)

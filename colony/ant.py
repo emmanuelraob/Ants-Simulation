@@ -4,7 +4,6 @@ import random
 import pygame
 from enum import Enum
 from world.world_variables import World_Variables
-from world.world import World
 from obstacles.obstacles import Obstacles
 
 world_variables = World_Variables()
@@ -34,6 +33,7 @@ class Ant:
         self.distance = 0
         self.next_distance = random.uniform(10,30) # to move in little lines
         self.state = State.LOOKING_FOR_FOOD
+        self.food_last_place = None
     
     def draw(self, win):
         pygame.draw.circle(win, self.color, (self.x, self.y), ANT_RADIUS)
@@ -53,6 +53,13 @@ class Ant:
             pass
 
     def look_for_food(self,world_matrix):
+        food_found = self.verify_food(world_matrix)
+        if food_found:
+            self.food_last_place = (self.x, self.y)
+            self.state = State.COMING_BACK_COLONY
+            #do not delete the or carry food already 
+            return
+
         if self.distance < self.next_distance :
             self.x = self.x + self.speed * math.cos(self.angle)
             self.y = self.y + self.speed * math.sin(self.angle)
@@ -132,3 +139,7 @@ class Ant:
         self.color = world_variables.ant_color
         if self.health < 30:
             self.color = world_variables.ant_trace_forward
+
+    def verify_food(self, world_matrix):
+        return world_matrix.verify_for_food(self.x, self.y)
+        

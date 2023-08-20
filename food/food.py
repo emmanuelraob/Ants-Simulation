@@ -30,3 +30,11 @@ class Food:
                 y = y_center + r * math.sin(angle)
 
                 self.meals.append(Meal(x, y, 1))
+    
+    def verify_pos(self, x, y):
+        list = self.tree.get_in_region(x,y)
+        if not list == None:
+            for meal in list:
+                if meal.crash(x,y):
+                    return meal
+        return False
