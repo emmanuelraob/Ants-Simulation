@@ -42,9 +42,9 @@ class Ant:
         if self.state == State.LOOKING_FOR_FOOD:
             self.look_for_food(world_matrix)
         elif self.state == State.COMING_BACK_COLONY:
-            self.go_to_colony(world_matrix, False,colony)
+            self.go_to_colony(world_matrix,colony)
         elif self.state == State.CARRYING_FOOD:
-            self.go_to_colony(world_matrix, True,colony)
+            self.tracing_to_colony(world_matrix,colony)
         elif self.state == State.GOING_FOR_FOOD:
             self.go_to_food(world_matrix)
         elif self.state == State.KEEPING_TRACE:
@@ -56,7 +56,7 @@ class Ant:
         food_found = self.verify_food(world_matrix)
         if food_found:
             self.food_last_place = (self.x, self.y)
-            self.state = State.COMING_BACK_COLONY
+            self.state = State.CARRYING_FOOD
             #do not delete the or carry food already 
             return
 
@@ -74,7 +74,7 @@ class Ant:
             world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_forward
             world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
 
-    def go_to_colony(self,world_matrix, carry_food, colony):
+    def go_to_colony(self,world_matrix, colony):
         dx = (WIN_WIDTH // 2) - self.x
         dy = (WIN_HEIGHT // 2) - self.y
         if self.distance < self.next_distance and math.sqrt(dx**2 + dy**2) > 5:
@@ -92,22 +92,21 @@ class Ant:
                 self.state = State.GOING_FOR_FOOD
             self.in_colony(colony)
 
-        if self.x < WIN_WIDTH and self.x > 0 and self.y < WIN_HEIGHT and self.y > 0:
-            world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
-            world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id
-
     def verify_direction(self,world_matrix):
         nextx = self.x + self.speed * math.cos(self.angle)
         nexty = self.y + self.speed * math.sin(self.angle)
 
         if world_matrix.verify(nextx, nexty):
             self.angle = (self.angle + math.pi) % (2 * math.pi)
-        
-    def tracing_for_food(self,world_matrix):
-        pass        
-
-    def tracing_to_colony(self,world_matrix):
+ 
+    def tracing_for_food(self,world_matrix, colony):
         pass
+        
+    def tracing_to_colony(self,world_matrix, colony):
+        self.go_to_colony(world_matrix, colony)
+        if self.x < WIN_WIDTH and self.x > 0 and self.y < WIN_HEIGHT and self.y > 0:
+            world_matrix.world_matrix[int(self.y/4)][int(self.x/4)] = world_variables.ant_trace_back
+            world_matrix.world_matrix_id[int(self.y/4)][int(self.x/4)] = self.id  
 
     def go_to_food(self, word_matrix):
         pass
