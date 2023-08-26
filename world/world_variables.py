@@ -11,7 +11,7 @@ class World_Variables:
 
 
         #colony
-        self.ant_amount = 100
+        self.ant_amount = 50
         self.colony_amount_food = 1000
 
         #ant 
